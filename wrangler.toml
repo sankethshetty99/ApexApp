@@ -1,0 +1,37 @@
+# The apex gate. sankethshetty.me and www.sankethshetty.me serve nothing but a
+# Google login; the one allow-listed address gets a minimal landing page.
+#
+#   npx wrangler deploy
+#   npx wrangler secret put SESSION_SECRET
+#
+# SESSION_SECRET is a fresh random value for this worker (set once via the
+# API during setup). It does not need to match the learn/doors secret: the
+# cookie is domain-scoped, but a cookie minted here simply is not honoured
+# there and vice versa. No breakage, just separate sessions.
+name = "sankethshetty-apex"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+account_id = "a144004a1c8affdf199db396019a5b36"
+workers_dev = false
+
+# These routes currently belong to the portfolio-site worker. Deploying with
+# them here moves the apex + www off the static portfolio and onto the gate.
+# Both hostnames must be authorised JavaScript origins on the OAuth client or
+# the sign-in button renders and fails when pressed.
+routes = [
+  { pattern = "sankethshetty.me/*", zone_name = "sankethshetty.me" },
+  { pattern = "www.sankethshetty.me/*", zone_name = "sankethshetty.me" },
+]
+
+[assets]
+directory = "./public"
+not_found_handling = "404-page"
+
+[vars]
+ALLOWED_EMAILS = "sankethshetty007@gmail.com"
+# The shared OAuth client, registered under the TravelApp Google project and
+# used by every app on this domain. Public by design - it ships inside the
+# login page. Only SESSION_SECRET is a real secret.
+GOOGLE_CLIENT_ID = "549354264414-cda9f28jvki1562apg3ih2ilavt6qbd9.apps.googleusercontent.com"
+# Scoped to the parent domain, matching the learn app and the doors.
+COOKIE_DOMAIN = "sankethshetty.me"
