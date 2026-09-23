@@ -13,7 +13,8 @@ everything else sits behind the gate.
 
 ## Layout
 
-- `src/worker.js` — routing: `/assets/*` public, everything else gated
+- `src/worker.js` — routing: `/assets/*` public, everything else gated;
+  `pm.sankethshetty.me` 301s to the public Notion portfolio page
 - `shared/auth.js` — the shared Google sign-in (copied from LearnApp's
   production restyle: dark pill + initTokenClient, no GIS renderButton).
   Session cookie is `sid_apex`.

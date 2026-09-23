@@ -21,6 +21,11 @@ workers_dev = false
 routes = [
   { pattern = "sankethshetty.me/*", zone_name = "sankethshetty.me" },
   { pattern = "www.sankethshetty.me/*", zone_name = "sankethshetty.me" },
+  # pm serves a plain 301 to the public Notion portfolio page. A zone
+  # Single Redirect rule would do the same, but the API credential cannot
+  # manage rulesets, so the redirect lives here - version controlled, same
+  # deploy pipeline. No auth on this hostname: it is just a redirect.
+  { pattern = "pm.sankethshetty.me/*", zone_name = "sankethshetty.me" },
 ]
 
 [assets]

@@ -48,6 +48,16 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // pm.sankethshetty.me is a plain 301 to the public Notion portfolio.
+    // No gate here: the Notion page is public, and a login would not hide
+    // the direct notion.site URL anyway.
+    if (url.hostname === 'pm.sankethshetty.me') {
+      return Response.redirect(
+        'https://sankethshetty.notion.site/New-Page-3e42b0e77f7e81728f4ac0310423bfc7',
+        301,
+      );
+    }
+
     // Public portfolio images. No auth (see note at top).
     if (url.pathname === '/assets' || url.pathname.startsWith('/assets/')) {
       return env.ASSETS.fetch(request);
